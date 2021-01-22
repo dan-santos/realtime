@@ -1,0 +1,53 @@
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geek Chat</title>
+    {% bootstrap_css %}
+</head>
+<body>
+    <div class="container">
+        <!--Bloco de conversa-->
+        <textarea id="sala" cols="70" rows="15"></textarea><br/>
+        <!--Onde o user digite a mensagem-->
+        <input id="texto" type="text" size="100"/><br/>
+        {% buttons %}
+            <input id="botao" type="button" value="Enviar"/>
+        {% endbuttons %}
+    </div>
+
+    {% bootstrap_javascript jquery='full' %}
+    <script>
+        var nome_sala = '{{ nome_sala_json }}'; // testar sem aspas
+
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host + 
+            '/ws/chat/' + nome_sala + '/'
+        );
+
+        chatSocket.onclose = function(e){
+            console.error('O chat encerrou de forma inesperada ou um dos usuários saiu da conversa.');
+        };
+
+        document.querySelector('#texto').focus();
+        document.querySelector('#texto').onkeyup = function(e){
+            if(e.keyCode === 13){
+                document.querySelector('#botao').click();
+            }
+        }
+
+        document.querySelector('#botao').onclick = function(e){
+            var mensagemInput = document.querySelector('#texto');
+            var mensagem = mensagemInput.value;
+            // transformando string em json
+            chatSocket.send(JSON.stringify({
+                'mensagem': mensagem
+            }));
+            // resetando valor da caixa de texto
+            mensagemInput.value = '';
+        };
+    </script>
+</body>
+</html>
