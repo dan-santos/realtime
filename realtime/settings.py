@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'boostrap4',
+    'bootstrap4',
     'channels',
     'chat',
     'django.contrib.admin',
