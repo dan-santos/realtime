@@ -127,13 +127,14 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # config especifica do channels
+# ASGI_APPLICATION = 'realtime.asgi.application'
 ASGI_APPLICATION = 'realtime.routing.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             # 6379 eh a porta padrao do redis
-            'hosts': [('127.0.0.1', 6379)]
+            'hosts': [('127.0.0.1', 6379)],     
         }, 
     },
 }

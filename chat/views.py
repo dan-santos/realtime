@@ -3,11 +3,11 @@ from django.views.generic import TemplateView
 import json
 
 class IndexView(TemplateView):
-    template_name = 'index.html'
+    template_name = 'chat/index.html'
 
 
 class SalaView(TemplateView):
-    template_name = 'sala.html'
+    template_name = 'chat/sala.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
